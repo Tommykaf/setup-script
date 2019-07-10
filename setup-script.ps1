@@ -3,7 +3,7 @@ param(
     [string]$pythonVersion = "3.7.4",
     [string]$nodeVersion = "",
     [string]$JDKVersion = "12.0.1",
-    [string]$gitVersion = "12.0.1",
+    [string]$gitVersion = "2.22.0",
     [switch]$verbose,
     [switch]$deleteInstallers
     )
@@ -13,6 +13,19 @@ class Dependency {
     [array]$arguments
     [string]$fileExtension
     [bool]$shouldInstall = $true
+
+    Dependency(
+        [string]$url
+    ){
+        [Dependency]::new($url, @(), ".exe")
+    }
+
+    Dependency(
+        [string]$url,
+        [array]$arguments
+    ){
+        [Dependency]::new($url, $arguments, ".exe")
+    }
 
     Dependency(
         [string]$url,
@@ -31,10 +44,10 @@ class Dependency {
 }
 
 $deps= @{
-    "python" = [Dependency]::new(("https://www.python.org/ftp/python/{0}/python-{0}.exe" -f $pythonVersion), ("/quiet","PrependPath=1","Include_test=0"), ".exe")
-    "JDK" = [Dependency]::new(("https://download.oracle.com/otn-pub/java/jdk/{0}+12/69cfe15208a647278a19ef0990eea691/jdk-{0}_windows-x64_bin.exe" -f $JDKVersion),("INSTALL_SILENT=1"),".exe")
-    "VSCode" = [Dependency]::new("https://go.microsoft.com/fwlink/?LinkID=534107",@(),".exe")
-    "git" = [Dependency]::new("https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/Git-$gitVersion-64-bit.exe",@(),".exe")
+    "python" = [Dependency]::new(("https://www.python.org/ftp/python/{0}/python-{0}.exe" -f $pythonVersion), ("/quiet","PrependPath=1","Include_test=0"))
+    "JDK" = [Dependency]::new(("https://download.oracle.com/otn-pub/java/jdk/{0}+12/69cfe15208a647278a19ef0990eea691/jdk-{0}_windows-x64_bin.exe" -f $JDKVersion),("INSTALL_SILENT=1"))
+    "VSCode" = [Dependency]::new("https://go.microsoft.com/fwlink/?LinkID=534107")
+    "git" = [Dependency]::new("https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/Git-$gitVersion-64-bit.exe")
 }
 
 

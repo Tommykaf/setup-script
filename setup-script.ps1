@@ -1,9 +1,9 @@
 # variables
 param(
-    [string]$pythonVersion = "3.7.4",
+    [string]$pythonVersion = "3.8.2",
     [string]$nodeVersion = "",
-    [string]$JDKVersion = "12.0.1",
-    [string]$gitVersion = "2.22.0",
+    [string]$JDKVersion = "14.0.1+8",
+    [string]$gitVersion = "2.26.2",
     [switch]$verbose,
     [switch]$deleteInstallers
     )
@@ -45,7 +45,7 @@ class Dependency {
 
 $deps= @{
     "python" = [Dependency]::new(("https://www.python.org/ftp/python/{0}/python-{0}.exe" -f $pythonVersion), ("/quiet","PrependPath=1","Include_test=0"))
-    "JDK" = [Dependency]::new(("https://download.oracle.com/otn-pub/java/jdk/{0}+12/69cfe15208a647278a19ef0990eea691/jdk-{0}_windows-x64_bin.exe" -f $JDKVersion),("INSTALL_SILENT=1"))
+    "JDK" = [Dependency]::new(("http://download.bell-sw.com/java/{0}/bellsoft-jdk{0}-windows-amd64.msi" -f $JDKVersion),("INSTALL_SILENT=1"), ".msi")
     "VSCode" = [Dependency]::new("https://go.microsoft.com/fwlink/?LinkID=534107")
     "git" = [Dependency]::new("https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/Git-$gitVersion-64-bit.exe")
 }

@@ -50,6 +50,13 @@ $deps= @{
     "git" = [Dependency]::new("https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/Git-$gitVersion-64-bit.exe")
 }
 
+$vscodeExtensions = @(
+    "vscjava.vscode-java-pack",
+    "ms-python.python",
+    "ms-vscode.powershell",
+    "equinusocio.vsc-material-theme",
+    "pnp.polacode",
+    "mhutchie.git-graph")
 
 #TODO - Add version check
 
@@ -106,5 +113,7 @@ if ($deleteInstallers.IsPresent) {
     }
 }
 
-
-#TODO - Add vscode extension installation
+# VSCode extensions
+foreach ($key in $vscodeExtensions) {
+    code --install-extension $key
+}
